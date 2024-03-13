@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# add import mycode.c in keymap.c
+if ! grep -q "mycode.c" keymap.c; then
+    echo "#include \"mycode.c\"" >>keymap.c
+fi
+
+# update rules.mk
+if ! grep -q "REPEAT_KEY_ENABLE" rules.mk; then
+    echo "REPEAT_KEY_ENABLE = yes" >>rules.mk
+fi
