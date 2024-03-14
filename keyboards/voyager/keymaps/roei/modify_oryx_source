@@ -9,3 +9,12 @@ fi
 if ! grep -q "REPEAT_KEY_ENABLE" rules.mk; then
     echo "REPEAT_KEY_ENABLE = yes" >>rules.mk
 fi
+
+# update config.h
+if ! grep -q "HOLD_ON_OTHER_KEY_PRESS_PER_KEY" config.h; then
+    echo "#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY" >>rules.mk
+fi
+
+if ! grep -q "HPERMISSIVE_HOLD_PER_KEY" config.h; then
+    echo "#define PERMISSIVE_HOLD_PER_KEY" >>rules.mk
+fi
