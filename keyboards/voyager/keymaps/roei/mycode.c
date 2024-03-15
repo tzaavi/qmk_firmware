@@ -81,22 +81,15 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 }
 
 /*
- * Stringent unilateral tap
- * Modifiers should not be triggered when a mod-tap key is pressed in combination with another key on the same hand.
- * required: #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
- * WARNING:this one cause mod keys to register twice for some reason, disabled for now
+ * Immediately select the hold action when another key is pressed.
  */
-bool get_hold_on_other_key_press___(uint16_t keycode, keyrecord_t *record) {
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     // Activate layer with another key press
     if (IS_LAYER_TAP(keycode)) return true;
 
     // Sent its tap keycode when non-Shift overlaps with another key on the same hand
-    if (IS_UNILATERAL(record, next_record)/* && !IS_MOD_TAP_SHIFT(next_keycode)*/) {
-        record->keycode = GET_TAP_KEYCODE(keycode);
-        process_record(record);
-        // Release the tap keycode and send the event
-        record->event.pressed = false;
-        process_record(record);
+    if (IS_BILATERAL(record, next_record) && IS_MOD_TAP_SHIFT(keycode)) {
+        return true;
     }
 
     return false;
