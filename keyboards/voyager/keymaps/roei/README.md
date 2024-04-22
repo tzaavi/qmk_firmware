@@ -22,4 +22,6 @@ to build
 
 ```
 make voyager:roei
+
+- how to orgenized repo: https://filterpaper.github.io/qmk/userspace.html
 ```
